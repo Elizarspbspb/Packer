@@ -75,10 +75,13 @@ int main() {
 #include <unistd.h>  // Для sleep
 #include <cmath>     // Для sqrt
 
+// g++ -fPIE -pie -o cpu ./cpu.cpp -std=c++17 -pthread
 // sudo ./pid 11601  0x70177afa6de0  0x7f0ffffffffc7d81   (0x7f7ffffffffc7d81 - загруженно максимально)
 
 
-static unsigned long long prevTotal = 10000, prevIdle = 2000;
+static unsigned long long Total = 10000, Idle = 2000;
+//static unsigned long long prevTotal = 10000, prevIdle = 2000;
+static long long prevTotal = 10000, prevIdle = 2000;
 static double prevUsage = 10.0;
 
 // Функция для получения загрузки процессора из /proc/stat
@@ -106,11 +109,11 @@ void getCpuUsage(double& currentUsage, double& deltaUsage) {
     }
 
     unsigned long long total = user + nice + system + idle;
-    unsigned long long totalDelta = total - prevTotal;
-    unsigned long long idleDelta = idle - prevIdle;
+    unsigned long long totalDelta = total - Total;
+    unsigned long long idleDelta = idle - Idle;
 
-    prevTotal = total;
-    prevIdle = idle;
+    Total = total;
+    Idle = idle;
 
     if (totalDelta == 0) {
         currentUsage = 0.0;
@@ -149,6 +152,7 @@ int main() {
         }
 
         sleep(1);  // Пауза на 1 секунду
+        std::cout << " ------------------- ... " << prevTotal - prevIdle << " sec." << std::endl;
     }
     return 0;
 }

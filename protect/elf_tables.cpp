@@ -48,6 +48,7 @@ void print_symbol_table(const std::string &file_path) {
                           << "\n\tBind: " << GELF_ST_BIND(sym.st_info)
                           << "\n\tOther: " << static_cast<int>(sym.st_other)
                           << "\n\tSection Index: " << sym.st_shndx << std::endl;
+                // Это будут поля структуры...
             }
         }
     }
@@ -105,4 +106,29 @@ void print_string_table(const std::string &file_path) {
 
     elf_end(e);
     close(fd);
+}
+
+void print_symbol_8_byte() {
+// Смысл функции искать символы одинакового размера ... и менять их между собой
+    /*Symbol: _ZL9prevTotal
+        Address: 0x5020
+        Size: 8
+        Type: 1
+        Bind: 0
+        Other: 0
+        Section Index: 26
+Symbol: _ZL8prevIdle
+        Address: 0x5028
+        Size: 8
+        Type: 1
+        Bind: 0
+        Other: 0
+        Section Index: 26
+Symbol: _ZL9prevUsage
+        Address: 0x5030
+        Size: 8
+        Type: 1
+        Bind: 0
+        Other: 0
+        Section Index: 26*/
 }
